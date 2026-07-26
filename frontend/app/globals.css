@@ -1,0 +1,89 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+@layer base {
+  :root {
+    --background: #ffffff;
+    --foreground: #222222;
+    --card: #ffffff;
+    --card-foreground: #222222;
+    --popover: #ffffff;
+    --popover-foreground: #222222;
+    --primary: #FF385C;
+    --primary-hover: #E00B41;
+    --secondary: #717171;
+    --muted: #F7F7F7;
+    --muted-foreground: #717171;
+    --border: #DDDDDD;
+    --input: #DDDDDD;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: #141414;
+    --foreground: #F1F1F1;
+    --card: #1F1F1F;
+    --card-foreground: #F1F1F1;
+    --popover: #1F1F1F;
+    --popover-foreground: #F1F1F1;
+    --primary: #FF385C;
+    --primary-hover: #E00B41;
+    --secondary: #B0B0B0;
+    --muted: #2A2A2A;
+    --muted-foreground: #B0B0B0;
+    --border: #333333;
+    --input: #333333;
+  }
+}
+
+@theme {
+  --color-airbnb: #FF385C;
+  --color-airbnb-hover: #E00B41;
+  --color-airbnb-text: #222222;
+  --color-airbnb-secondary: #717171;
+  --color-airbnb-border: #DDDDDD;
+  --color-airbnb-bg: #F7F7F7;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+svg {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+/* Custom scrollbar for horizontal filter chips */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Skeleton animation */
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.animate-pulse-slow {
+  animation: pulse-slow 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Contain Leaflet z-index below modal dialogs */
+.leaflet-container {
+  z-index: 1 !important;
+}
+.leaflet-pane {
+  z-index: 1 !important;
+}
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 2 !important;
+}
