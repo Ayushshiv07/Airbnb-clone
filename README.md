@@ -1,4 +1,4 @@
-# 🏠 Airbnb Clone — Full-Stack Marketplace Application
+# Airbnb Clone — Full-Stack Marketplace Application
 
 A high-fidelity, production-grade Airbnb marketplace clone built for the **SDE Fullstack Assignment**. Replicates Airbnb's design, user experience, and core browse/search/booking workflows.
 
