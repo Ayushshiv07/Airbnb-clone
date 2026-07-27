@@ -42,6 +42,7 @@ import {
   Trees,
   Shield,
   Cross,
+  Key,
   Zap,
   CheckCircle2,
   Mail,
