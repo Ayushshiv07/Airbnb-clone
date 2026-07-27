@@ -114,7 +114,6 @@ def get_listings(
         .order_by(models.Listing.id.desc())
         .offset(offset)
         .limit(page_size)
-        .unique()
         .all()
     )
 
