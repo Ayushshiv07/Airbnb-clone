@@ -20,15 +20,16 @@ const ExploreMap = dynamic(() => import('./ExploreMap').then((mod) => mod.Explor
 
 interface ListingGridProps {
   listings: ListingCardType[];
+  mapListings?: ListingCardType[];
   isLoading: boolean;
   total: number;
   page: number;
   pages: number;
 }
 
-const popularCities = ['New York', 'Paris', 'Tokyo', 'Barcelona', 'Bali'];
+const popularCities = ['New York', 'Paris', 'Tokyo', 'Barcelona', 'Bali', 'Delhi', 'Mumbai', 'Kolkata'];
 
-export function ListingGrid({ listings, isLoading, page, pages }: ListingGridProps) {
+export function ListingGrid({ listings, mapListings, isLoading, page, pages, total }: ListingGridProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isMapView, setIsMapView] = useState(true);
@@ -87,6 +88,8 @@ export function ListingGrid({ listings, isLoading, page, pages }: ListingGridPro
     );
   }
 
+  const activeMapItems = mapListings && mapListings.length > 0 ? mapListings : listings;
+
   return (
     <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       
@@ -116,24 +119,34 @@ export function ListingGrid({ listings, isLoading, page, pages }: ListingGridPro
         <div className="flex flex-col lg:flex-row gap-8 items-start">
           
           {/* Cards Column */}
-          <div className="w-full lg:w-3/5 grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-8">
-            {listings.map((listing) => (
-              <ListingCard key={listing.id} listing={listing} />
-            ))}
+          <div className="w-full lg:w-3/5">
+            <div className="mb-4 text-xs font-extrabold text-gray-700 dark:text-zinc-300">
+              Over {total} homes within map area
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-8">
+              {listings.map((listing) => (
+                <ListingCard key={listing.id} listing={listing} />
+              ))}
+            </div>
           </div>
 
           {/* Sticky Interactive Map Column */}
           <div className="w-full lg:w-2/5 sticky top-28 h-[calc(100vh-140px)] hidden lg:block">
-            <ExploreMap listings={listings} />
+            <ExploreMap listings={activeMapItems} />
           </div>
 
         </div>
       ) : (
         /* Full Grid Layout */
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10">
-          {listings.map((listing) => (
-            <ListingCard key={listing.id} listing={listing} />
-          ))}
+        <div className="space-y-4">
+          <div className="text-xs font-extrabold text-gray-700 dark:text-zinc-300">
+            Over {total} homes available
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10">
+            {listings.map((listing) => (
+              <ListingCard key={listing.id} listing={listing} />
+            ))}
+          </div>
         </div>
       )}
 

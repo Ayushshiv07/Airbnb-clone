@@ -8,7 +8,7 @@ import { FilterRow } from '../components/FilterRow';
 import { ListingGrid } from '../components/ListingGrid';
 import { SkeletonGrid } from '../components/Skeleton';
 import { Footer } from '../components/Footer';
-import { PaginatedListings } from '../lib/types';
+import { PaginatedListings, ListingCard } from '../lib/types';
 import { api } from '../lib/api';
 import { useToast } from '../contexts/ToastContext';
 
@@ -25,6 +25,7 @@ function HomeContent() {
     pages: 1,
     page_size: 12,
   });
+  const [mapListings, setMapListings] = useState<ListingCard[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -32,6 +33,7 @@ function HomeContent() {
     const queryString = searchParams.toString();
     const endpoint = `/listings/?${queryString}`;
 
+    // Fetch paginated grid items
     api
       .get<PaginatedListings>(endpoint)
       .then((data) => {
@@ -51,6 +53,17 @@ function HomeContent() {
       .finally(() => {
         setIsLoading(false);
       });
+
+    // Fetch all listings for map markers
+    const mapParams = new URLSearchParams(searchParams.toString());
+    mapParams.set('page_size', '100');
+    mapParams.delete('page');
+
+    api
+      .get<PaginatedListings>(`/listings/?${mapParams.toString()}`)
+      .then((res) => setMapListings(res.items))
+      .catch(console.error);
+
   }, [searchParams, showToast]);
 
   return (
@@ -74,6 +87,7 @@ function HomeContent() {
       <main className="flex-1">
         <ListingGrid
           listings={listingsData.items}
+          mapListings={mapListings.length > 0 ? mapListings : listingsData.items}
           isLoading={isLoading}
           total={listingsData.total}
           page={listingsData.page}
