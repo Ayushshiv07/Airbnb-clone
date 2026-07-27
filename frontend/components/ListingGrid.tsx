@@ -1,13 +1,22 @@
 'use client';
 
 import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ListingCard } from './ListingCard';
 import { SkeletonCard } from './Skeleton';
 import { EmptyState } from './EmptyState';
-import { ExploreMap } from './ExploreMap';
 import { ListingCard as ListingCardType } from '../lib/types';
 import { ChevronLeft, ChevronRight, SearchX, MapPin, Map, List } from 'lucide-react';
+
+const ExploreMap = dynamic(() => import('./ExploreMap').then((mod) => mod.ExploreMap), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full min-h-[500px] bg-gray-100 dark:bg-zinc-800 rounded-3xl animate-pulse flex items-center justify-center text-xs text-gray-400 font-bold">
+      Loading Interactive Map...
+    </div>
+  ),
+});
 
 interface ListingGridProps {
   listings: ListingCardType[];

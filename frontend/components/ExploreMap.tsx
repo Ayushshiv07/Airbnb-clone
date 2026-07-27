@@ -17,7 +17,7 @@ export function ExploreMap({ listings }: ExploreMapProps) {
     setIsClient(true);
   }, []);
 
-  if (!isClient) {
+  if (!isClient || typeof window === 'undefined') {
     return (
       <div className="w-full h-full min-h-[500px] bg-gray-100 dark:bg-zinc-800 rounded-3xl animate-pulse flex items-center justify-center text-xs text-gray-400 font-bold">
         Loading Interactive Map...
@@ -25,7 +25,7 @@ export function ExploreMap({ listings }: ExploreMapProps) {
     );
   }
 
-  // Dynamic Leaflet imports
+  // Dynamic Leaflet imports on client only
   const { MapContainer, TileLayer, Marker, Popup } = require('react-leaflet');
   const L = require('leaflet');
 
@@ -41,12 +41,11 @@ export function ExploreMap({ listings }: ExploreMapProps) {
         className="w-full h-full"
       >
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://carto.com/">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+          url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
         />
 
         {listings.map((l) => {
-          // Resolve coordinates: if latitude/longitude present, use them; else fallback based on city
           let lat = l.latitude;
           let lng = l.longitude;
 
