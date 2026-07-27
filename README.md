@@ -6,8 +6,7 @@ A high-fidelity, production-grade vacation rental platform built for the **SDE F
 
 ## 🌐 Live Deployment & Repository Links
 
-- **Live Deployed Application (Vercel)**: 👉 **[https://airbnb-clone-git-main-ayushshiv07s-projects.vercel.app](https://airbnb-clone-git-main-ayushshiv07s-projects.vercel.app)**
-- **Public GitHub Repository**: 👉 **[https://github.com/Ayushshiv07/Airbnb-clone](https://github.com/Ayushshiv07/Airbnb-clone)**
+- **Live Deployed Application **: 👉 (https://stayscape-clone1.onrender.com/)
 - **Backend API & Swagger Docs**: 👉 **`http://localhost:8000/docs`**
 
 ---
