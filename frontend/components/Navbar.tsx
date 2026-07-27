@@ -117,27 +117,25 @@ export function Navbar({ onSearchClick, isSearchExpanded }: NavbarProps) {
             {/* User & Mode Controls */}
             <div className="flex items-center gap-2 sm:gap-3">
               
-              {/* Host Mode Switcher Button */}
-              {user?.is_host && (
+              {/* Always Visible 'Airbnb your home' / Host Mode Switch Tab */}
+              {user?.is_host ? (
                 <button
                   onClick={toggleHostMode}
-                  className={`hidden md:flex items-center gap-1.5 px-3.5 py-2 text-xs font-extrabold rounded-full transition-all cursor-pointer border-2 ${
+                  className={`hidden md:flex items-center gap-1.5 px-4 py-2 text-xs font-extrabold rounded-full transition-all cursor-pointer border-2 ${
                     isHost
-                      ? 'border-gray-900 bg-gray-900 text-white hover:bg-black'
-                      : 'border-gray-900 bg-white text-black hover:bg-gray-100'
+                      ? 'border-gray-900 bg-gray-900 text-white hover:bg-black shadow-xs'
+                      : 'border-rose-500 bg-rose-50 text-rose-600 hover:bg-rose-100 dark:bg-rose-950/40 dark:text-rose-400'
                   }`}
                 >
                   <ArrowLeftRight className="w-3.5 h-3.5" />
-                  <span>{isHost ? 'Switch to Guest Mode' : 'Switch to Host Mode'}</span>
+                  <span>{isHost ? 'Switch to Traveling' : 'Switch to Hosting'}</span>
                 </button>
-              )}
-
-              {user && !user.is_host && (
+              ) : (
                 <Link
-                  href="/signup"
-                  className="hidden md:inline-block px-3.5 py-2 text-xs font-bold rounded-full border-2 border-gray-900 text-black hover:bg-black hover:text-white transition-colors"
+                  href={user ? "/host/listings/new" : "/login"}
+                  className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 text-xs font-extrabold rounded-full border-2 border-gray-300 dark:border-zinc-700 hover:border-gray-900 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-800 transition-all cursor-pointer"
                 >
-                  Become a Host
+                  <span>Airbnb your home</span>
                 </Link>
               )}
 
