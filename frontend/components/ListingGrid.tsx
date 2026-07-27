@@ -94,19 +94,14 @@ export function ListingGrid({ listings, mapListings, isLoading, page, pages, tot
     <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       
       {/* Professional Pitch Banner Header */}
-      <div className="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-gray-200 dark:border-zinc-800 pb-4">
-        <div>
-          <h2 className="text-xl font-extrabold text-black dark:text-white tracking-tight flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-rose-500" />
-            <span>Discover Handpicked Stays Across the World</span>
-          </h2>
-          <p className="text-xs font-semibold text-gray-600 dark:text-zinc-400 mt-0.5">
-            Luxury beachfront villas, Himalayan chalets, heritage havelis & urban lofts across India, Europe, Asia & the Americas
-          </p>
-        </div>
-        <span className="text-xs font-extrabold px-3.5 py-1.5 rounded-full bg-rose-50 text-rose-600 border border-rose-200 dark:bg-rose-950/40 dark:text-rose-400 dark:border-rose-900 flex-shrink-0">
-          {total} Verified Stays Available
-        </span>
+      <div className="mb-6 border-b border-gray-200 dark:border-zinc-800 pb-4">
+        <h2 className="text-xl font-extrabold text-black dark:text-white tracking-tight flex items-center gap-2">
+          <Sparkles className="w-5 h-5 text-rose-500" />
+          <span>Discover Handpicked Stays Across the World</span>
+        </h2>
+        <p className="text-xs font-semibold text-gray-600 dark:text-zinc-400 mt-0.5">
+          Luxury beachfront villas, Himalayan chalets, heritage havelis & urban lofts across India, Europe, Asia & the Americas
+        </p>
       </div>
 
       {/* Floating View Switcher Toggle Button (Bottom Center) */}
