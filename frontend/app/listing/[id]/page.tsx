@@ -147,7 +147,9 @@ export default function ListingDetailPage() {
           <div className="flex flex-wrap items-center justify-between gap-4 mt-2 text-sm text-gray-800 dark:text-zinc-200">
             <div className="flex items-center gap-2 flex-wrap font-semibold">
               <Star className="w-4 h-4 fill-rose-500 text-rose-500" />
-              <span className="font-extrabold text-black dark:text-white">{listing.avg_rating.toFixed(2)}</span>
+              <span className="font-extrabold text-black dark:text-white">
+                {listing.avg_rating ? listing.avg_rating.toFixed(2) : '5.00'}
+              </span>
               <span className="underline font-bold">{listing.review_count} reviews</span>
               <span>·</span>
               {listing.host.is_superhost && (
