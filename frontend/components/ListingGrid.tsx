@@ -7,7 +7,7 @@ import { ListingCard } from './ListingCard';
 import { SkeletonCard } from './Skeleton';
 import { EmptyState } from './EmptyState';
 import { ListingCard as ListingCardType } from '../lib/types';
-import { ChevronLeft, ChevronRight, SearchX, MapPin, Map, List } from 'lucide-react';
+import { ChevronLeft, ChevronRight, SearchX, MapPin, Map, List, Sparkles } from 'lucide-react';
 
 const ExploreMap = dynamic(() => import('./ExploreMap').then((mod) => mod.ExploreMap), {
   ssr: false,
@@ -93,6 +93,22 @@ export function ListingGrid({ listings, mapListings, isLoading, page, pages, tot
   return (
     <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       
+      {/* Professional Pitch Banner Header */}
+      <div className="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-gray-200 dark:border-zinc-800 pb-4">
+        <div>
+          <h2 className="text-xl font-extrabold text-black dark:text-white tracking-tight flex items-center gap-2">
+            <Sparkles className="w-5 h-5 text-rose-500" />
+            <span>Discover Handpicked Stays Across the World</span>
+          </h2>
+          <p className="text-xs font-semibold text-gray-600 dark:text-zinc-400 mt-0.5">
+            Luxury beachfront villas, Himalayan chalets, heritage havelis & urban lofts across India, Europe, Asia & the Americas
+          </p>
+        </div>
+        <span className="text-xs font-extrabold px-3.5 py-1.5 rounded-full bg-rose-50 text-rose-600 border border-rose-200 dark:bg-rose-950/40 dark:text-rose-400 dark:border-rose-900 flex-shrink-0">
+          {total} Verified Stays Available
+        </span>
+      </div>
+
       {/* Floating View Switcher Toggle Button (Bottom Center) */}
       <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-40">
         <button
@@ -120,9 +136,6 @@ export function ListingGrid({ listings, mapListings, isLoading, page, pages, tot
           
           {/* Cards Column */}
           <div className="w-full lg:w-3/5">
-            <div className="mb-4 text-xs font-extrabold text-gray-700 dark:text-zinc-300">
-              Over {total} homes within map area
-            </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-8">
               {listings.map((listing) => (
                 <ListingCard key={listing.id} listing={listing} />
@@ -138,15 +151,10 @@ export function ListingGrid({ listings, mapListings, isLoading, page, pages, tot
         </div>
       ) : (
         /* Full Grid Layout */
-        <div className="space-y-4">
-          <div className="text-xs font-extrabold text-gray-700 dark:text-zinc-300">
-            Over {total} homes available
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10">
-            {listings.map((listing) => (
-              <ListingCard key={listing.id} listing={listing} />
-            ))}
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10">
+          {listings.map((listing) => (
+            <ListingCard key={listing.id} listing={listing} />
+          ))}
         </div>
       )}
 
