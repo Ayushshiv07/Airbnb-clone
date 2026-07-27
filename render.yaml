@@ -1,7 +1,7 @@
 services:
   # Next.js Frontend Web Service
   - type: web
-    name: airbnb-clone-frontend
+    name: stayscape-frontend
     env: node
     rootDir: frontend
     buildCommand: npm install && npm run build
@@ -12,7 +12,7 @@ services:
 
   # FastAPI Backend Web Service
   - type: web
-    name: airbnb-clone-backend
+    name: stayscape-backend
     env: python
     rootDir: backend
     buildCommand: pip install -r requirements.txt
