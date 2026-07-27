@@ -56,7 +56,7 @@ function HomeContent() {
 
     // Fetch all listings for map markers
     const mapParams = new URLSearchParams(searchParams.toString());
-    mapParams.set('page_size', '100');
+    mapParams.set('page_size', '50');
     mapParams.delete('page');
 
     api

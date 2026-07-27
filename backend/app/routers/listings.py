@@ -26,7 +26,7 @@ def get_listings(
     property_type: Optional[str] = None,
     amenities: Optional[str] = None,  # comma-separated amenity IDs
     page: int = Query(1, ge=1),
-    page_size: int = Query(12, ge=1, le=50),
+    page_size: int = Query(12, ge=1, le=500),
     db: Session = Depends(get_db),
     current_user: Optional[models.User] = Depends(auth.get_optional_user),
 ):
