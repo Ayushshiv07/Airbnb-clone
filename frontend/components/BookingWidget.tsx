@@ -3,10 +3,11 @@
 import React, { useState } from 'react';
 import { Star } from 'lucide-react';
 import { ListingDetail } from '../lib/types';
-import { formatCurrency, calculateNights } from '../lib/utils';
+import { calculateNights } from '../lib/utils';
 import { CheckoutModal } from './CheckoutModal';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
+import { useCurrency } from '../contexts/CurrencyContext';
 
 interface BookingWidgetProps {
   listing: ListingDetail;
@@ -23,6 +24,7 @@ export function BookingWidget({
 }: BookingWidgetProps) {
   const { user } = useAuth();
   const { showToast } = useToast();
+  const { formatPrice } = useCurrency();
 
   const [guestsCount, setGuestsCount] = useState(1);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
@@ -60,7 +62,7 @@ export function BookingWidget({
         <div className="flex items-baseline justify-between mb-6">
           <div>
             <span className="text-2xl font-extrabold text-black">
-              {formatCurrency(listing.price_per_night)}
+              {formatPrice(listing.price_per_night)}
             </span>
             <span className="text-black font-semibold text-sm ml-1">night</span>
           </div>
@@ -147,26 +149,26 @@ export function BookingWidget({
           <div className="mt-6 space-y-3 pt-6 border-t-2 border-gray-300 text-sm font-semibold text-black">
             <div className="flex justify-between text-black">
               <span className="underline">
-                {formatCurrency(listing.price_per_night)} × {nights} {nights === 1 ? 'night' : 'nights'}
+                {formatPrice(listing.price_per_night)} × {nights} {nights === 1 ? 'night' : 'nights'}
               </span>
-              <span className="font-bold">{formatCurrency(subtotal)}</span>
+              <span className="font-bold">{formatPrice(subtotal)}</span>
             </div>
 
             {cleaningFee > 0 && (
               <div className="flex justify-between text-black">
                 <span className="underline">Cleaning fee</span>
-                <span className="font-bold">{formatCurrency(cleaningFee)}</span>
+                <span className="font-bold">{formatPrice(cleaningFee)}</span>
               </div>
             )}
 
             <div className="flex justify-between text-black">
               <span className="underline">Airbnb service fee (12%)</span>
-              <span className="font-bold">{formatCurrency(serviceFee)}</span>
+              <span className="font-bold">{formatPrice(serviceFee)}</span>
             </div>
 
             <div className="pt-4 border-t-2 border-gray-300 flex justify-between font-extrabold text-base text-black">
               <span>Total before taxes</span>
-              <span className="text-rose-600 font-extrabold">{formatCurrency(totalPrice)}</span>
+              <span className="text-rose-600 font-extrabold">{formatPrice(totalPrice)}</span>
             </div>
           </div>
         )}

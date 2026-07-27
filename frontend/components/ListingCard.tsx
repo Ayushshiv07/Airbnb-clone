@@ -4,10 +4,10 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Heart, Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import { ListingCard as ListingCardType } from '../lib/types';
-import { formatCurrency } from '../lib/utils';
 import { api } from '../lib/api';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
+import { useCurrency } from '../contexts/CurrencyContext';
 
 interface ListingCardProps {
   listing: ListingCardType;
@@ -16,6 +16,7 @@ interface ListingCardProps {
 export function ListingCard({ listing }: ListingCardProps) {
   const { user } = useAuth();
   const { showToast } = useToast();
+  const { formatPrice } = useCurrency();
 
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
   const [isWishlisted, setIsWishlisted] = useState(listing.is_wishlisted);
@@ -146,7 +147,7 @@ export function ListingCard({ listing }: ListingCardProps) {
 
         <div className="mt-1 flex items-baseline gap-1">
           <span className="font-bold text-black text-base">
-            {formatCurrency(listing.price_per_night)}
+            {formatPrice(listing.price_per_night)}
           </span>
           <span className="text-black font-semibold text-sm">night</span>
         </div>

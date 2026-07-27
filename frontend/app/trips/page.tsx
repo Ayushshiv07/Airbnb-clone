@@ -8,16 +8,18 @@ import { Footer } from '../../components/Footer';
 import { EmptyState } from '../../components/EmptyState';
 import { ReviewForm } from '../../components/ReviewsSection';
 import { Booking } from '../../lib/types';
-import { formatCurrency, formatDate } from '../../lib/utils';
+import { formatDate } from '../../lib/utils';
 import { api } from '../../lib/api';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
+import { useCurrency } from '../../contexts/CurrencyContext';
 import { Compass, Calendar, MapPin, XCircle, CheckCircle, MessageSquare } from 'lucide-react';
 
 function TripsContent() {
   const router = useRouter();
   const { user, isLoading: isAuthLoading } = useAuth();
   const { showToast } = useToast();
+  const { formatPrice } = useCurrency();
 
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -71,17 +73,17 @@ function TripsContent() {
     <div className="min-h-screen flex flex-col">
       <Navbar />
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-1 w-full">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">My Trips</h1>
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-1 w-full text-black">
+        <h1 className="text-3xl font-extrabold text-black mb-6">My Trips</h1>
 
         {/* Tab switcher */}
-        <div className="flex items-center gap-4 border-b border-gray-200 dark:border-zinc-800 mb-8">
+        <div className="flex items-center gap-4 border-b-2 border-gray-300 mb-8">
           <button
             onClick={() => setActiveTab('upcoming')}
-            className={`pb-3 font-semibold text-sm transition-colors border-b-2 cursor-pointer ${
+            className={`pb-3 font-extrabold text-sm transition-colors border-b-2 cursor-pointer ${
               activeTab === 'upcoming'
-                ? 'border-gray-900 dark:border-white text-gray-900 dark:text-white'
-                : 'border-transparent text-gray-500 hover:text-gray-900 dark:hover:text-zinc-200'
+                ? 'border-black text-black'
+                : 'border-transparent text-gray-700 hover:text-black'
             }`}
           >
             Upcoming stays ({upcomingBookings.length})
@@ -89,10 +91,10 @@ function TripsContent() {
 
           <button
             onClick={() => setActiveTab('past')}
-            className={`pb-3 font-semibold text-sm transition-colors border-b-2 cursor-pointer ${
+            className={`pb-3 font-extrabold text-sm transition-colors border-b-2 cursor-pointer ${
               activeTab === 'past'
-                ? 'border-gray-900 dark:border-white text-gray-900 dark:text-white'
-                : 'border-transparent text-gray-500 hover:text-gray-900 dark:hover:text-zinc-200'
+                ? 'border-black text-black'
+                : 'border-transparent text-gray-700 hover:text-black'
             }`}
           >
             Past & cancelled stays ({pastBookings.length})
@@ -103,12 +105,12 @@ function TripsContent() {
         {isLoading ? (
           <div className="space-y-4">
             {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="h-40 bg-gray-100 dark:bg-zinc-800 rounded-2xl animate-pulse" />
+              <div key={i} className="h-40 bg-gray-100 rounded-2xl animate-pulse" />
             ))}
           </div>
         ) : displayedBookings.length === 0 ? (
           <EmptyState
-            icon={<Compass className="w-8 h-8" />}
+            icon={<Compass className="w-8 h-8 text-rose-500" />}
             title={activeTab === 'upcoming' ? 'No trips booked... yet!' : 'No past trips found'}
             description="Time to dust off your bags and start planning your next adventure."
             actionText="Start searching"
@@ -119,12 +121,12 @@ function TripsContent() {
             {displayedBookings.map((b) => (
               <div
                 key={b.id}
-                className="flex flex-col md:flex-row gap-6 p-6 rounded-2xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-xs hover:shadow-md transition-shadow"
+                className="flex flex-col md:flex-row gap-6 p-6 rounded-2xl border-2 border-gray-300 bg-white shadow-xs hover:shadow-md transition-shadow"
               >
                 {/* Thumbnail */}
                 <Link
                   href={`/listing/${b.listing.id}`}
-                  className="w-full md:w-64 h-48 rounded-xl overflow-hidden flex-shrink-0 bg-gray-100 dark:bg-zinc-800"
+                  className="w-full md:w-64 h-48 rounded-xl overflow-hidden flex-shrink-0 bg-gray-100 border border-gray-300"
                 >
                   <img
                     src={b.listing.images[0]?.url || 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800'}
@@ -137,14 +139,14 @@ function TripsContent() {
                 <div className="flex-1 flex flex-col justify-between space-y-4">
                   <div>
                     <div className="flex items-center justify-between gap-2">
-                      <span className="text-xs uppercase font-bold text-rose-500">{b.listing.property_type}</span>
+                      <span className="text-xs uppercase font-extrabold text-rose-600">{b.listing.property_type}</span>
                       <span
-                        className={`text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wider ${
+                        className={`text-xs font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider ${
                           b.status === 'confirmed'
-                            ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300'
+                            ? 'bg-emerald-100 text-emerald-900 border border-emerald-300'
                             : b.status === 'completed'
-                            ? 'bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300'
-                            : 'bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-300'
+                            ? 'bg-blue-100 text-blue-900 border border-blue-300'
+                            : 'bg-rose-100 text-rose-900 border border-rose-300'
                         }`}
                       >
                         {b.status}
@@ -152,46 +154,46 @@ function TripsContent() {
                     </div>
 
                     <Link href={`/listing/${b.listing.id}`}>
-                      <h3 className="text-lg font-bold text-gray-900 dark:text-white mt-1 hover:underline">
+                      <h3 className="text-lg font-extrabold text-black mt-1 hover:underline">
                         {b.listing.title}
                       </h3>
                     </Link>
 
-                    <p className="text-xs text-gray-500 dark:text-zinc-400 flex items-center gap-1 mt-1">
-                      <MapPin className="w-3.5 h-3.5" />
+                    <p className="text-xs font-semibold text-gray-700 flex items-center gap-1 mt-1">
+                      <MapPin className="w-3.5 h-3.5 text-rose-500" />
                       <span>{b.listing.city}, {b.listing.country}</span>
                     </p>
                   </div>
 
                   {/* Stay metadata */}
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs bg-gray-50 dark:bg-zinc-800/50 p-3 rounded-xl">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs bg-gray-50 p-3.5 rounded-xl border border-gray-300">
                     <div>
-                      <span className="text-gray-400 block font-bold uppercase">Dates</span>
-                      <span className="font-medium text-gray-900 dark:text-white">
+                      <span className="text-black block font-extrabold uppercase">Dates</span>
+                      <span className="font-bold text-black">
                         {formatDate(b.check_in)} - {formatDate(b.check_out)}
                       </span>
                     </div>
                     <div>
-                      <span className="text-gray-400 block font-bold uppercase">Nights & Guests</span>
-                      <span className="font-medium text-gray-900 dark:text-white">
+                      <span className="text-black block font-extrabold uppercase">Nights & Guests</span>
+                      <span className="font-bold text-black">
                         {b.nights} {b.nights === 1 ? 'night' : 'nights'}, {b.guests_count} {b.guests_count === 1 ? 'guest' : 'guests'}
                       </span>
                     </div>
                     <div>
-                      <span className="text-gray-400 block font-bold uppercase">Total Price</span>
-                      <span className="font-bold text-rose-500">{formatCurrency(b.total_price)}</span>
+                      <span className="text-black block font-extrabold uppercase">Total Price</span>
+                      <span className="font-extrabold text-rose-600">{formatPrice(b.total_price)}</span>
                     </div>
                   </div>
 
                   {/* Actions */}
                   <div className="flex items-center justify-between pt-2">
-                    <span className="text-xs text-gray-400">Reservation #{b.id}</span>
+                    <span className="text-xs font-bold text-gray-600">Reservation #{b.id}</span>
 
                     <div className="flex items-center gap-3">
                       {activeTab === 'upcoming' && b.status === 'confirmed' && (
                         <button
                           onClick={() => handleCancelBooking(b.id)}
-                          className="flex items-center gap-1 text-xs font-semibold text-rose-600 dark:text-rose-400 hover:underline cursor-pointer"
+                          className="flex items-center gap-1 text-xs font-extrabold text-rose-600 hover:underline cursor-pointer"
                         >
                           <XCircle className="w-4 h-4" /> Cancel Booking
                         </button>
@@ -200,7 +202,7 @@ function TripsContent() {
                       {activeTab === 'past' && !b.has_review && b.status === 'completed' && (
                         <button
                           onClick={() => setReviewingBookingId(reviewingBookingId === b.id ? null : b.id)}
-                          className="flex items-center gap-1 text-xs font-semibold text-rose-500 hover:underline cursor-pointer"
+                          className="flex items-center gap-1 text-xs font-extrabold text-rose-600 hover:underline cursor-pointer"
                         >
                           <MessageSquare className="w-4 h-4" />
                           {reviewingBookingId === b.id ? 'Close' : 'Leave a review'}
@@ -208,7 +210,7 @@ function TripsContent() {
                       )}
 
                       {b.has_review && (
-                        <span className="text-xs text-emerald-600 font-semibold flex items-center gap-1">
+                        <span className="text-xs text-emerald-700 font-extrabold flex items-center gap-1">
                           <CheckCircle className="w-4 h-4" /> Review Submitted
                         </span>
                       )}
@@ -240,7 +242,7 @@ function TripsContent() {
 
 export default function TripsPage() {
   return (
-    <Suspense fallback={<div className="p-8"><div className="h-64 bg-gray-100 dark:bg-zinc-800 rounded-2xl animate-pulse" /></div>}>
+    <Suspense fallback={<div className="p-8"><div className="h-64 bg-gray-100 rounded-2xl animate-pulse" /></div>}>
       <TripsContent />
     </Suspense>
   );

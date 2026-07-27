@@ -4,9 +4,10 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Modal } from './Modal';
 import { ListingDetail, Booking } from '../lib/types';
-import { formatCurrency, formatDate } from '../lib/utils';
+import { formatDate } from '../lib/utils';
 import { api, ApiError } from '../lib/api';
 import { useToast } from '../contexts/ToastContext';
+import { useCurrency } from '../contexts/CurrencyContext';
 import { CheckCircle2, ShieldCheck, CreditCard } from 'lucide-react';
 
 interface CheckoutModalProps {
@@ -38,6 +39,7 @@ export function CheckoutModal({
 }: CheckoutModalProps) {
   const router = useRouter();
   const { showToast } = useToast();
+  const { formatPrice, currentCurrency } = useCurrency();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [confirmedBooking, setConfirmedBooking] = useState<Booking | null>(null);
@@ -109,13 +111,13 @@ export function CheckoutModal({
             </div>
             <div className="flex justify-between">
               <span className="text-gray-500">Total Paid:</span>
-              <span className="font-bold text-rose-500 text-sm">{formatCurrency(totalPrice)}</span>
+              <span className="font-bold text-rose-500 text-sm">{formatPrice(totalPrice)}</span>
             </div>
           </div>
 
           <button
             onClick={handleModalClose}
-            className="w-full bg-rose-500 hover:bg-rose-600 text-white font-semibold py-3.5 rounded-xl transition-all shadow-md"
+            className="w-full bg-rose-500 hover:bg-rose-600 text-white font-semibold py-3.5 rounded-xl transition-all shadow-md cursor-pointer"
           >
             View My Trips
           </button>
@@ -161,22 +163,22 @@ export function CheckoutModal({
           <div className="space-y-2 text-xs border-t border-gray-200 dark:border-zinc-800 pt-4">
             <h4 className="font-semibold text-sm text-gray-900 dark:text-white mb-2">Price details</h4>
             <div className="flex justify-between text-gray-600 dark:text-zinc-400">
-              <span>{formatCurrency(nightlyRate)} × {nights} nights</span>
-              <span>{formatCurrency(nightlyRate * nights)}</span>
+              <span>{formatPrice(nightlyRate)} × {nights} nights</span>
+              <span>{formatPrice(nightlyRate * nights)}</span>
             </div>
             {cleaningFee > 0 && (
               <div className="flex justify-between text-gray-600 dark:text-zinc-400">
                 <span>Cleaning fee</span>
-                <span>{formatCurrency(cleaningFee)}</span>
+                <span>{formatPrice(cleaningFee)}</span>
               </div>
             )}
             <div className="flex justify-between text-gray-600 dark:text-zinc-400">
               <span>Airbnb service fee</span>
-              <span>{formatCurrency(serviceFee)}</span>
+              <span>{formatPrice(serviceFee)}</span>
             </div>
             <div className="flex justify-between font-bold text-sm text-gray-900 dark:text-white pt-2 border-t border-gray-200 dark:border-zinc-800">
-              <span>Total (USD)</span>
-              <span className="text-rose-500">{formatCurrency(totalPrice)}</span>
+              <span>Total ({currentCurrency.code})</span>
+              <span className="text-rose-500">{formatPrice(totalPrice)}</span>
             </div>
           </div>
 
@@ -193,7 +195,7 @@ export function CheckoutModal({
             className="w-full bg-rose-500 hover:bg-rose-600 text-white font-semibold py-3.5 rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
           >
             <ShieldCheck className="w-5 h-5" />
-            <span>{isSubmitting ? 'Confirming...' : `Confirm & Pay ${formatCurrency(totalPrice)}`}</span>
+            <span>{isSubmitting ? 'Confirming...' : `Confirm & Pay ${formatPrice(totalPrice)}`}</span>
           </button>
 
         </div>
