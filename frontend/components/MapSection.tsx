@@ -127,8 +127,8 @@ export function MapSection({ latitude, longitude, city, country }: MapSectionPro
           className="w-full h-full"
         >
           <TileLayer
-            attribution='&copy; <a href="https://carto.com/">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+            attribution='&copy; <a href="https://www.google.com/maps">Google Maps</a>'
+            url="https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
           />
           <Marker position={[lat, lng]} icon={customIcon}>
             <Popup>
