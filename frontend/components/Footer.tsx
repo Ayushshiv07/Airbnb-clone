@@ -11,7 +11,7 @@ export function Footer() {
   return (
     <footer className="border-t-2 border-gray-300 dark:border-zinc-800 py-6 bg-white dark:bg-zinc-900 mt-auto transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-800 dark:text-zinc-200 font-semibold gap-4">
-        <p>© 2026 Airbnb Clone, Inc. · SDE Fullstack Assignment Demo</p>
+        <p>© 2026 StayScape Inc. · Premium Vacation Rentals & Luxury Stays Platform</p>
         
         <div className="flex items-center gap-6 font-bold text-black dark:text-white">
           <button

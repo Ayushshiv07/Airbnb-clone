@@ -131,7 +131,7 @@ export default function CreateListingPage() {
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-1 w-full text-black">
         <h1 className="text-3xl font-extrabold text-black mb-2">List your space</h1>
         <p className="text-sm font-semibold text-gray-700 mb-8">
-          Fill out the details below to publish your property on Airbnb
+          Fill out the details below to publish your property on StayScape
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-8">

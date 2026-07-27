@@ -6,8 +6,8 @@ import { CurrencyProvider } from '../contexts/CurrencyContext';
 import { Toast } from '../components/Toast';
 
 export const metadata: Metadata = {
-  title: 'Airbnb Clone — Vacation Rentals & Beach Houses',
-  description: 'Find beach houses, cabins, condos, and unique stays around the world.',
+  title: 'StayScape — Luxury Vacation Rentals & Unique Stays',
+  description: 'Discover beach houses, Himalayan chalets, urban lofts, and handpicked stays around the world.',
 };
 
 export default function RootLayout({

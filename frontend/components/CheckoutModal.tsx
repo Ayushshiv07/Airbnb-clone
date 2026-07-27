@@ -173,7 +173,7 @@ export function CheckoutModal({
               </div>
             )}
             <div className="flex justify-between text-gray-600 dark:text-zinc-400">
-              <span>Airbnb service fee</span>
+              <span>StayScape service fee</span>
               <span>{formatPrice(serviceFee)}</span>
             </div>
             <div className="flex justify-between font-bold text-sm text-gray-900 dark:text-white pt-2 border-t border-gray-200 dark:border-zinc-800">

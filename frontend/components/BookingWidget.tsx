@@ -162,7 +162,7 @@ export function BookingWidget({
             )}
 
             <div className="flex justify-between text-black">
-              <span className="underline">Airbnb service fee (12%)</span>
+              <span className="underline">StayScape service fee (12%)</span>
               <span className="font-bold">{formatPrice(serviceFee)}</span>
             </div>
 

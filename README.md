@@ -1,6 +1,6 @@
-# Airbnb Clone — Full-Stack Marketplace Application
+# StayScape — Full-Stack Vacation Rentals & Luxury Stays Platform
 
-A high-fidelity, production-grade Airbnb marketplace clone built for the **SDE Fullstack Assignment**. Replicates Airbnb's design, user experience, and core browse/search/booking workflows.
+A high-fidelity, production-grade vacation rental platform built for the **SDE Fullstack Assignment**. Replicates modern travel marketplace design, user experience, and core browse/search/booking workflows.
 
 ---
 

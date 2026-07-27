@@ -53,18 +53,34 @@ export function Navbar({ onSearchClick, isSearchExpanded }: NavbarProps) {
             
             {/* Logo & Mode Badge */}
             <div className="flex items-center gap-3">
-              <Link href="/" className="flex items-center gap-2 text-rose-500 hover:opacity-90 transition-opacity">
+              <Link href="/" className="flex items-center gap-2.5 hover:opacity-95 transition-opacity">
                 <svg
                   width="36"
                   height="36"
                   style={{ width: '36px', height: '36px', minWidth: '36px', minHeight: '36px' }}
-                  className="w-9 h-9 fill-current flex-shrink-0"
+                  className="w-9 h-9 flex-shrink-0"
                   viewBox="0 0 32 32"
+                  fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path d="M16 1c2.008 0 3.463.963 4.751 3.269l.533 1.025c1.954 3.83 6.114 12.54 7.1 14.836l.145.353c.667 1.591.91 2.472.96 3.396l.011.315c0 4.108-3.141 7.806-7.5 7.806-2.585 0-4.83-1.341-6.195-3.376l-.805-1.304-.805 1.304c-1.365 2.035-3.61 3.376-6.195 3.376-4.359 0-7.5-3.698-7.5-7.806 0-.962.247-1.897.876-3.415l.24-.549c.986-2.297 5.146-11.007 7.1-14.836l.533-1.025C12.537 1.963 13.992 1 16 1zm0 2c-1.24 0-2.228.625-3.23 2.457l-.316.602c-1.87 3.665-5.975 12.261-6.937 14.509l-.16.376c-.538 1.298-.757 2.016-.757 2.856 0 3.019 2.274 5.806 5.5 5.806 2.038 0 3.865-1.127 4.966-2.915l.434-.739.434.739c1.101 1.788 2.928 2.915 4.966 2.915 3.226 0 5.5-2.787 5.5-5.806 0-.793-.207-1.488-.707-2.73l-.21-.497c-.962-2.248-5.067-10.844-6.937-14.509l-.316-.602C18.228 3.625 17.24 3 16 3zm0 13a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9zm0 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5z" />
+                  <defs>
+                    <linearGradient id="stayscape-brand-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#FF385C" />
+                      <stop offset="100%" stopColor="#E00B41" />
+                    </linearGradient>
+                  </defs>
+                  <path
+                    d="M16 2L3 12v17a1 1 0 001 1h24a1 1 0 001-1V12L16 2zm0 4.2L26 14v13H6V14L16 6.2z"
+                    fill="url(#stayscape-brand-grad)"
+                  />
+                  <path
+                    d="M16 11a4 4 0 00-4 4c0 3 4 7 4 7s4-4 4-7a4 4 0 00-4-4zm0 2.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"
+                    fill="url(#stayscape-brand-grad)"
+                  />
                 </svg>
-                <span className="font-bold text-xl tracking-tight hidden sm:inline">airbnb</span>
+                <span className="font-black text-2xl tracking-tight hidden sm:inline text-gray-900 dark:text-white">
+                  Stay<span className="text-rose-500">Scape</span>
+                </span>
               </Link>
 
               {/* Mode Badge Indicator */}
@@ -135,7 +151,7 @@ export function Navbar({ onSearchClick, isSearchExpanded }: NavbarProps) {
                   href={user ? "/host/listings/new" : "/login"}
                   className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 text-xs font-extrabold rounded-full border-2 border-gray-300 dark:border-zinc-700 hover:border-gray-900 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-800 transition-all cursor-pointer"
                 >
-                  <span>Airbnb your home</span>
+                  <span>List your home on StayScape</span>
                 </Link>
               )}
 

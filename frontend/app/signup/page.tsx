@@ -44,7 +44,7 @@ export default function SignupPage() {
           </div>
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Create an account</h2>
           <p className="text-xs text-gray-500 dark:text-zinc-400 mt-1">
-            Join Airbnb to book stays or list your property
+            Join StayScape to book stays or list your property
           </p>
         </div>
 
