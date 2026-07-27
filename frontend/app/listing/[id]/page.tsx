@@ -107,7 +107,7 @@ export default function ListingDetailPage() {
         router.push('/');
       })
       .finally(() => setIsLoading(false));
-  }, [listingId, router, showToast]);
+  }, [listingId]);
 
   const handleWishlistToggle = () => {
     if (!user) {
