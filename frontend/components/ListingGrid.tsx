@@ -1,12 +1,13 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ListingCard } from './ListingCard';
 import { SkeletonCard } from './Skeleton';
 import { EmptyState } from './EmptyState';
+import { ExploreMap } from './ExploreMap';
 import { ListingCard as ListingCardType } from '../lib/types';
-import { ChevronLeft, ChevronRight, SearchX, MapPin } from 'lucide-react';
+import { ChevronLeft, ChevronRight, SearchX, MapPin, Map, List } from 'lucide-react';
 
 interface ListingGridProps {
   listings: ListingCardType[];
@@ -21,6 +22,7 @@ const popularCities = ['New York', 'Paris', 'Tokyo', 'Barcelona', 'Bali'];
 export function ListingGrid({ listings, isLoading, page, pages }: ListingGridProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [isMapView, setIsMapView] = useState(true);
 
   const handlePageChange = (newPage: number) => {
     if (newPage < 1 || newPage > pages) return;
@@ -77,15 +79,56 @@ export function ListingGrid({ listings, isLoading, page, pages }: ListingGridPro
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10">
-        {listings.map((listing) => (
-          <ListingCard key={listing.id} listing={listing} />
-        ))}
+    <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      
+      {/* Floating View Switcher Toggle Button (Bottom Center) */}
+      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-40">
+        <button
+          onClick={() => setIsMapView((prev) => !prev)}
+          className="flex items-center gap-2 px-5 py-3 rounded-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-extrabold text-sm shadow-2xl hover:scale-105 active:scale-95 transition-all border-2 border-white dark:border-gray-900 cursor-pointer"
+        >
+          {isMapView ? (
+            <>
+              <span>Show list</span>
+              <List className="w-4 h-4" />
+            </>
+          ) : (
+            <>
+              <span>Show map</span>
+              <Map className="w-4 h-4" />
+            </>
+          )}
+        </button>
       </div>
 
-      {/* Pagination Controls - High Contrast Solid Black Styling */}
+      {/* Grid vs Split-Screen Map View */}
+      {isMapView ? (
+        /* Split-Screen Layout: Cards on Left, Interactive Price Map on Right */
+        <div className="flex flex-col lg:flex-row gap-8 items-start">
+          
+          {/* Cards Column */}
+          <div className="w-full lg:w-3/5 grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-8">
+            {listings.map((listing) => (
+              <ListingCard key={listing.id} listing={listing} />
+            ))}
+          </div>
+
+          {/* Sticky Interactive Map Column */}
+          <div className="w-full lg:w-2/5 sticky top-28 h-[calc(100vh-140px)] hidden lg:block">
+            <ExploreMap listings={listings} />
+          </div>
+
+        </div>
+      ) : (
+        /* Full Grid Layout */
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10">
+          {listings.map((listing) => (
+            <ListingCard key={listing.id} listing={listing} />
+          ))}
+        </div>
+      )}
+
+      {/* Pagination Controls */}
       {pages > 1 && (
         <div className="flex items-center justify-center gap-4 mt-16 pt-8 border-t-2 border-gray-900">
           

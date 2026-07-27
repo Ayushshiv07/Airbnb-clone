@@ -16,6 +16,16 @@ const propertyTypes = [
   { label: 'Loft', type: 'Loft', icon: Warehouse },
 ];
 
+const quickAmenities = [
+  { name: 'Free parking', id: 4 },
+  { name: 'Wifi', id: 1 },
+  { name: 'Air conditioning', id: 5 },
+  { name: 'Allows pets', id: 6 },
+  { name: 'Pool', id: 3 },
+  { name: 'Kitchen', id: 2 },
+  { name: 'TV', id: 8 },
+];
+
 function FilterRowContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -44,6 +54,27 @@ function FilterRowContent() {
       params.set('property_type', type);
     } else {
       params.delete('property_type');
+    }
+    params.set('page', '1');
+    router.push(`/?${params.toString()}`);
+  };
+
+  const handleToggleQuickAmenity = (amenityId: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    let currentArr = searchParams.get('amenities')
+      ? searchParams.get('amenities')!.split(',').map(Number)
+      : [];
+
+    if (currentArr.includes(amenityId)) {
+      currentArr = currentArr.filter((a) => a !== amenityId);
+    } else {
+      currentArr.push(amenityId);
+    }
+
+    if (currentArr.length > 0) {
+      params.set('amenities', currentArr.join(','));
+    } else {
+      params.delete('amenities');
     }
     params.set('page', '1');
     router.push(`/?${params.toString()}`);
@@ -93,12 +124,16 @@ function FilterRowContent() {
     (searchParams.get('property_type') ? 1 : 0) +
     (searchParams.get('amenities') ? searchParams.get('amenities')!.split(',').length : 0);
 
+  const activeAmenityIds = searchParams.get('amenities')
+    ? searchParams.get('amenities')!.split(',').map(Number)
+    : [];
+
   return (
     <div className="border-b border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 sticky top-20 z-30 py-4 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
         
         {/* Category Chips Scroll */}
-        <div className="flex items-center gap-8 overflow-x-auto no-scrollbar py-1 flex-1">
+        <div className="flex items-center gap-6 overflow-x-auto no-scrollbar py-1 flex-1">
           {propertyTypes.map((item) => {
             const Icon = item.icon;
             const isActive = currentPropType === item.type;
@@ -112,11 +147,33 @@ function FilterRowContent() {
                     : 'border-transparent text-gray-700 dark:text-zinc-300 font-semibold hover:text-black dark:hover:text-white hover:border-gray-400'
                 }`}
               >
-                <Icon className={`w-6 h-6 transition-transform group-hover:scale-110 ${isActive ? 'text-black dark:text-white' : 'text-gray-700 dark:text-zinc-300'}`} />
+                <Icon className={`w-5 h-5 transition-transform group-hover:scale-110 ${isActive ? 'text-black dark:text-white' : 'text-gray-700 dark:text-zinc-300'}`} />
                 <span className="text-xs">{item.label}</span>
               </button>
             );
           })}
+
+          <div className="h-6 w-px bg-gray-300 dark:bg-zinc-700 flex-shrink-0" />
+
+          {/* Quick Amenity Pills (Matching Screenshot) */}
+          <div className="hidden sm:flex items-center gap-2 flex-shrink-0">
+            {quickAmenities.map((qa) => {
+              const isSelected = activeAmenityIds.includes(qa.id);
+              return (
+                <button
+                  key={qa.id}
+                  onClick={() => handleToggleQuickAmenity(qa.id)}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-extrabold border transition-all cursor-pointer whitespace-nowrap ${
+                    isSelected
+                      ? 'bg-gray-900 text-white border-gray-900 dark:bg-white dark:text-gray-900'
+                      : 'bg-white dark:bg-zinc-800 text-gray-800 dark:text-zinc-200 border-gray-300 dark:border-zinc-700 hover:border-gray-900'
+                  }`}
+                >
+                  {qa.name}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Filters Button */}
