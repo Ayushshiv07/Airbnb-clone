@@ -87,3 +87,22 @@ svg {
 .leaflet-bottom {
   z-index: 2 !important;
 }
+
+/* Custom Price Pill Marker overrides */
+.custom-price-pill-marker {
+  background: transparent !important;
+  border: none !important;
+}
+.leaflet-div-icon {
+  background: transparent !important;
+  border: none !important;
+}
+.airbnb-map-popup .leaflet-popup-content-wrapper {
+  padding: 4px;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+}
+.airbnb-map-popup .leaflet-popup-content {
+  margin: 4px;
+}
+

@@ -62,7 +62,7 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
 
     return data as T;
   } catch (err: any) {
-    // Fallback for Vercel deployment if backend API endpoint is unreachable
+    // Fallback for frontend client if backend API endpoint is unreachable
     if (typeof window !== 'undefined') {
       const { MOCK_LISTINGS, getMockListingDetail } = await import('./mockData');
       if (cleanEndpoint.includes('/listings/')) {
@@ -72,12 +72,44 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
         }
       }
       if (cleanEndpoint.includes('/listings')) {
+        const dummyUrl = new URL(`http://localhost${cleanEndpoint}`);
+        const propertyType = dummyUrl.searchParams.get('property_type');
+        const location = dummyUrl.searchParams.get('location')?.toLowerCase();
+        const minPrice = dummyUrl.searchParams.get('min_price') ? parseFloat(dummyUrl.searchParams.get('min_price')!) : null;
+        const maxPrice = dummyUrl.searchParams.get('max_price') ? parseFloat(dummyUrl.searchParams.get('max_price')!) : null;
+        const page = parseInt(dummyUrl.searchParams.get('page') || '1');
+        const pageSize = parseInt(dummyUrl.searchParams.get('page_size') || '12');
+
+        let filtered = [...MOCK_LISTINGS];
+
+        if (propertyType) {
+          filtered = filtered.filter(item => item.property_type.toLowerCase() === propertyType.toLowerCase());
+        }
+        if (location) {
+          filtered = filtered.filter(item =>
+            item.city.toLowerCase().includes(location) ||
+            item.country.toLowerCase().includes(location) ||
+            item.title.toLowerCase().includes(location)
+          );
+        }
+        if (minPrice !== null) {
+          filtered = filtered.filter(item => item.price_per_night >= minPrice);
+        }
+        if (maxPrice !== null) {
+          filtered = filtered.filter(item => item.price_per_night <= maxPrice);
+        }
+
+        const total = filtered.length;
+        const pages = Math.ceil(total / pageSize) || 1;
+        const start = (page - 1) * pageSize;
+        const paginatedItems = filtered.slice(start, start + pageSize);
+
         return {
-          items: MOCK_LISTINGS,
-          total: MOCK_LISTINGS.length,
-          page: 1,
-          pages: 1,
-          page_size: MOCK_LISTINGS.length,
+          items: paginatedItems,
+          total: total,
+          page: page,
+          pages: pages,
+          page_size: pageSize,
         } as T;
       }
     }

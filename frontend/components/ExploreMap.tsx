@@ -69,8 +69,43 @@ export function ExploreMap({ listings }: ExploreMapProps) {
   }
 
   // Dynamic Leaflet imports on client only
-  const { MapContainer, TileLayer, Marker, Popup } = require('react-leaflet');
+  const { MapContainer, TileLayer, Marker, Popup, useMap } = require('react-leaflet');
   const L = require('leaflet');
+
+  // Map Bounds Controller to fit view to markers
+  function MapBoundsController({ listingsData }: { listingsData: ListingCardType[] }) {
+    const map = useMap();
+    useEffect(() => {
+      if (!listingsData || listingsData.length === 0) return;
+      const bounds: [number, number][] = [];
+      listingsData.forEach((l) => {
+        let lat = l.latitude;
+        let lng = l.longitude;
+        if (!lat || !lng) {
+          const city = (l.city || '').toLowerCase().trim();
+          const country = (l.country || '').toLowerCase().trim();
+          for (const key of Object.keys(CITY_COORDS)) {
+            if (city.includes(key) || country.includes(key)) {
+              [lat, lng] = CITY_COORDS[key];
+              break;
+            }
+          }
+        }
+        if (lat && lng) {
+          bounds.push([lat, lng]);
+        }
+      });
+
+      if (bounds.length > 0) {
+        if (bounds.length === 1) {
+          map.setView(bounds[0], 12);
+        } else {
+          map.fitBounds(bounds, { padding: [40, 40], maxZoom: 13 });
+        }
+      }
+    }, [listingsData, map]);
+    return null;
+  }
 
   // Default map center (India / Global center view)
   const defaultCenter: [number, number] = [20.5937, 78.9629]; // India center
@@ -83,6 +118,7 @@ export function ExploreMap({ listings }: ExploreMapProps) {
         scrollWheelZoom={true}
         className="w-full h-full"
       >
+        <MapBoundsController listingsData={listings} />
         <TileLayer
           attribution='&copy; <a href="https://www.google.com/maps">Google Maps</a>'
           url="https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
