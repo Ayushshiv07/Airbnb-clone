@@ -61,7 +61,7 @@ function SearchBarContent({ isExpanded, onClose }: SearchBarProps) {
   const popularCities = ['New York', 'Paris', 'Tokyo', 'Barcelona', 'Bali'];
 
   return (
-    <div className="bg-white dark:bg-zinc-900 border-b border-gray-200 dark:border-zinc-800 shadow-xl py-6 px-4 transition-all animate-in slide-in-from-top duration-200">
+    <div className="sticky top-20 z-40 bg-white dark:bg-zinc-900 border-b border-gray-200 dark:border-zinc-800 shadow-xl py-6 px-4 transition-all animate-in slide-in-from-top duration-200">
       <div className="max-w-4xl mx-auto relative">
         <button
           onClick={onClose}

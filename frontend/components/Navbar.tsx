@@ -95,7 +95,10 @@ export function Navbar({ onSearchClick, isSearchExpanded }: NavbarProps) {
             ) : (
               /* Guest Search Pill */
               <button
-                onClick={onSearchClick}
+                onClick={() => {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  if (onSearchClick) onSearchClick();
+                }}
                 className={`flex items-center gap-3 px-4 py-2 border-2 border-gray-300 dark:border-zinc-600 rounded-full shadow-xs hover:shadow-md transition-all cursor-pointer bg-white dark:bg-zinc-800 text-sm font-bold text-black dark:text-white ${
                   isSearchExpanded ? 'opacity-0 pointer-events-none' : 'opacity-100'
                 }`}
