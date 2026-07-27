@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
-  const id = parseInt(params.id) || 1;
+export async function GET(request: Request, { params }: { params: Promise<{ id: string }> | { id: string } }) {
+  const resolvedParams = await Promise.resolve(params);
+  const id = parseInt(resolvedParams.id) || 1;
   
   return NextResponse.json({
     id: id,
