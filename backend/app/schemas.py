@@ -132,6 +132,8 @@ class HostInfo(BaseModel):
     """Host details shown on the listing detail page."""
     id: int
     name: str
+    email: str
+    phone: Optional[str] = "+1 (555) 234-5678"
     avatar_url: Optional[str] = None
     is_superhost: bool = False
     bio: Optional[str] = None

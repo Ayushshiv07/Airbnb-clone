@@ -42,9 +42,12 @@ import {
   Trees,
   Shield,
   Cross,
-  Key,
   Zap,
   CheckCircle2,
+  Mail,
+  Phone,
+  MessageSquare,
+  Clock,
 } from 'lucide-react';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useToast } from '../../../contexts/ToastContext';
@@ -235,6 +238,63 @@ export default function ListingDetailPage() {
               <p className="text-sm font-medium leading-relaxed whitespace-pre-line text-gray-800 dark:text-zinc-200">
                 {listing.description}
               </p>
+            </div>
+
+            {/* Host Contact & Short Details Card */}
+            <div className="p-5 rounded-2xl bg-gray-50 dark:bg-zinc-800/60 border border-gray-200 dark:border-zinc-700/60 space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-rose-500 text-white font-bold flex items-center justify-center text-lg overflow-hidden flex-shrink-0 shadow-xs">
+                    {listing.host.avatar_url ? (
+                      <img src={listing.host.avatar_url} alt={listing.host.name} className="w-full h-full object-cover" />
+                    ) : (
+                      listing.host.name.charAt(0).toUpperCase()
+                    )}
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h4 className="font-extrabold text-base text-gray-900 dark:text-white">{listing.host.name}</h4>
+                      {listing.host.is_superhost && (
+                        <span className="bg-rose-100 text-rose-700 dark:bg-rose-950/60 dark:text-rose-300 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
+                          <Award className="w-3 h-3" /> Superhost
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-xs font-semibold text-gray-500 dark:text-zinc-400">
+                      Host since {new Date(listing.host.created_at).getFullYear()}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {listing.host.bio && (
+                <p className="text-xs font-medium text-gray-600 dark:text-zinc-300 italic border-l-2 border-rose-500 pl-3">
+                  "{listing.host.bio}"
+                </p>
+              )}
+
+              {/* Host Contact Details Pills */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                <div className="flex items-center gap-2 text-xs font-bold text-gray-800 dark:text-zinc-200 bg-white dark:bg-zinc-900 p-2.5 rounded-xl border border-gray-200 dark:border-zinc-700">
+                  <Mail className="w-4 h-4 text-rose-500 flex-shrink-0" />
+                  <span className="truncate">{listing.host.email || 'host@demo.com'}</span>
+                </div>
+
+                <div className="flex items-center gap-2 text-xs font-bold text-gray-800 dark:text-zinc-200 bg-white dark:bg-zinc-900 p-2.5 rounded-xl border border-gray-200 dark:border-zinc-700">
+                  <Phone className="w-4 h-4 text-rose-500 flex-shrink-0" />
+                  <span>{listing.host.phone || '+1 (555) 234-5678'}</span>
+                </div>
+
+                <div className="flex items-center gap-2 text-xs font-bold text-gray-800 dark:text-zinc-200 bg-white dark:bg-zinc-900 p-2.5 rounded-xl border border-gray-200 dark:border-zinc-700">
+                  <Clock className="w-4 h-4 text-rose-500 flex-shrink-0" />
+                  <span>Responds within an hour</span>
+                </div>
+
+                <div className="flex items-center gap-2 text-xs font-bold text-gray-800 dark:text-zinc-200 bg-white dark:bg-zinc-900 p-2.5 rounded-xl border border-gray-200 dark:border-zinc-700">
+                  <MessageSquare className="w-4 h-4 text-rose-500 flex-shrink-0" />
+                  <span>100% Response Rate</span>
+                </div>
+              </div>
             </div>
 
             {/* Amenities Grid (Matching Screenshot) */}

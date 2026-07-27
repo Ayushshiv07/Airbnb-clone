@@ -51,6 +51,8 @@ export interface BookedRange {
 export interface HostInfo {
   id: number;
   name: string;
+  email?: string;
+  phone?: string;
   avatar_url?: string | null;
   is_superhost: boolean;
   bio?: string | null;
