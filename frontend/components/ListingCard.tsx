@@ -73,10 +73,12 @@ export function ListingCard({ listing }: ListingCardProps) {
         
         {/* Photos */}
         <img
-          src={images[currentImgIndex]?.url || images[0].url}
+          src={(images[currentImgIndex]?.url || images[0].url).replace('w=1200', 'w=600')}
           alt={listing.title}
+          loading="lazy"
+          decoding="async"
           onError={(e) => {
-            e.currentTarget.src = 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800';
+            e.currentTarget.src = 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600';
           }}
           className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-300 ease-out"
         />

@@ -105,7 +105,18 @@ def get_listings(
     pages = ceil(total / page_size) if total > 0 else 1
     offset = (page - 1) * page_size
 
-    listings = query.order_by(models.Listing.id.desc()).offset(offset).limit(page_size).all()
+    from sqlalchemy.orm import joinedload
+    listings = (
+        query.options(
+            joinedload(models.Listing.images),
+            joinedload(models.Listing.reviews)
+        )
+        .order_by(models.Listing.id.desc())
+        .offset(offset)
+        .limit(page_size)
+        .unique()
+        .all()
+    )
 
     # User's wishlist set for fast O(1) lookup
     user_wishlist_set = set()
