@@ -11,7 +11,7 @@ A high-fidelity, production-grade vacation rental platform built for the **SDE F
 
 ---
 
-## 📋 Assignment Requirements & Compliance Matrix
+##  Assignment Requirements & Compliance Matrix
 
 | Requirement / Section | Feature | Implementation Status | Location |
 |---|---|---|---|
@@ -40,7 +40,7 @@ A high-fidelity, production-grade vacation rental platform built for the **SDE F
 
 ---
 
-## 🏗️ Architecture & Technology Stack
+##  Architecture & Technology Stack
 
 - **Backend**: Python 3.13, FastAPI 0.115, SQLAlchemy 2.0 ORM, SQLite database (`airbnb.db`), Pydantic v2 data validation schemas.
 - **Frontend**: Next.js 14+ (App Router), TypeScript, Tailwind CSS, Lucide React Icons, Leaflet Maps (`react-leaflet`).
@@ -49,7 +49,7 @@ A high-fidelity, production-grade vacation rental platform built for the **SDE F
 
 ---
 
-## 🗄️ Database Schema Diagram
+##  Database Schema Diagram
 
 ```mermaid
 erDiagram
@@ -139,7 +139,7 @@ erDiagram
 
 ---
 
-## 🌐 API Overview & Endpoints
+##  API Overview & Endpoints
 
 | Method | Endpoint | Description | Auth Required |
 |---|---|---|---|
