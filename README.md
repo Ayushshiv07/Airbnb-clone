@@ -4,6 +4,14 @@ A high-fidelity, production-grade Airbnb marketplace clone built for the **SDE F
 
 ---
 
+## 🌐 Live Deployment & Repository Links
+
+- **Live Deployed Application (Vercel)**: 👉 **[https://airbnb-clone-puce-theta.vercel.app](https://airbnb-clone-puce-theta.vercel.app)**
+- **Public GitHub Repository**: 👉 **[https://github.com/Ayushshiv07/Airbnb-clone](https://github.com/Ayushshiv07/Airbnb-clone)**
+- **Backend API & Swagger Docs**: 👉 **`http://localhost:8000/docs`**
+
+---
+
 ## 📋 Assignment Requirements & Compliance Matrix
 
 | Requirement / Section | Feature | Implementation Status | Location |
