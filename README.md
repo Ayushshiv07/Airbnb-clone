@@ -182,7 +182,7 @@ npm run dev
 
 ---
 
-## 🔑 Demo Account Credentials
+## Demo Account Credentials
 
 Click quick-login buttons on `/login` or sign in manually:
 
