@@ -72,6 +72,14 @@ export function ExploreMap({ listings }: ExploreMapProps) {
   const { MapContainer, TileLayer, Marker, Popup, useMap } = require('react-leaflet');
   const L = require('leaflet');
 
+  const popularQuickCities = [
+    { name: 'New York', coords: CITY_COORDS['new york'] },
+    { name: 'Goa', coords: CITY_COORDS['goa'] },
+    { name: 'Paris', coords: CITY_COORDS['paris'] },
+    { name: 'Tokyo', coords: CITY_COORDS['tokyo'] },
+    { name: 'Mumbai', coords: CITY_COORDS['mumbai'] },
+  ];
+
   // Map Bounds Controller to fit view to markers and force size invalidation
   function MapBoundsController({ listingsData }: { listingsData: ListingCardType[] }) {
     const map = useMap();
@@ -116,10 +124,33 @@ export function ExploreMap({ listings }: ExploreMapProps) {
       });
 
       if (bounds.length > 0) {
-        if (bounds.length === 1) {
-          map.setView(bounds[0], 12);
+        let minLat = bounds[0][0], maxLat = bounds[0][0];
+        let minLng = bounds[0][1], maxLng = bounds[0][1];
+        bounds.forEach(([lat, lng]) => {
+          if (lat < minLat) minLat = lat;
+          if (lat > maxLat) maxLat = lat;
+          if (lng < minLng) minLng = lng;
+          if (lng > maxLng) maxLng = lng;
+        });
+
+        const latDiff = maxLat - minLat;
+        const lngDiff = Math.abs(maxLng - minLng);
+
+        // If listings are localized to a city/region (spread <= 6 degrees)
+        if (latDiff <= 6 && lngDiff <= 6) {
+          if (bounds.length === 1) {
+            map.flyTo(bounds[0], 12, { animate: true });
+          } else {
+            map.fitBounds([[minLat, minLng], [maxLat, maxLng]], {
+              padding: [50, 50],
+              maxZoom: 13,
+              minZoom: 10,
+            });
+          }
         } else {
-          map.fitBounds(bounds, { padding: [50, 50], maxZoom: 13, minZoom: 3 });
+          // Global multi-continent listings: Focus on the primary listing cluster at Zoom 11 (close-up city view)
+          const primaryLocation = bounds[0];
+          map.flyTo(primaryLocation, 11, { animate: true });
         }
       }
     }, [listingsData, map]);
@@ -127,21 +158,46 @@ export function ExploreMap({ listings }: ExploreMapProps) {
     return null;
   }
 
-  // Default map center (India / Global center view)
-  const defaultCenter: [number, number] = [20.5937, 78.9629]; // India center
+  function QuickCityButtons() {
+    const map = useMap();
+    return (
+      <div className="absolute top-3 left-1/2 -translate-x-1/2 z-[400] flex items-center gap-1.5 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md px-3 py-1.5 rounded-full shadow-lg border border-gray-200 dark:border-zinc-700 pointer-events-auto">
+        <span className="text-[10px] font-extrabold uppercase text-gray-800 dark:text-zinc-200 tracking-wider mr-1">
+          Jump to:
+        </span>
+        {popularQuickCities.map((city) => (
+          <button
+            key={city.name}
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              map.flyTo(city.coords, 12, { animate: true, duration: 1.2 });
+            }}
+            className="px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-gray-100 dark:bg-zinc-800 hover:bg-rose-500 hover:text-white text-gray-800 dark:text-zinc-200 transition-all cursor-pointer shadow-xs"
+          >
+            {city.name}
+          </button>
+        ))}
+      </div>
+    );
+  }
+
+  // Default map center (New York / City center view)
+  const defaultCenter: [number, number] = [40.7128, -73.9352];
 
   return (
     <div className="relative w-full h-full min-h-[600px] rounded-3xl overflow-hidden shadow-lg border-2 border-gray-300 dark:border-zinc-700 z-0">
       <MapContainer
         center={defaultCenter}
-        zoom={4}
-        minZoom={3}
+        zoom={11}
+        minZoom={4}
         maxBounds={[[-85, -180], [85, 180]]}
         maxBoundsViscosity={1.0}
         scrollWheelZoom={true}
         className="w-full h-full"
       >
         <MapBoundsController listingsData={listings} />
+        <QuickCityButtons />
         <TileLayer
           attribution='&copy; <a href="https://www.google.com/maps">Google Maps</a>'
           url="https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
