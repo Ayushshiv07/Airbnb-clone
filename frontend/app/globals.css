@@ -76,8 +76,11 @@ svg {
   animation: pulse-slow 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* Contain Leaflet z-index below modal dialogs */
+/* Contain Leaflet z-index below modal dialogs and ensure full coverage */
 .leaflet-container {
+  width: 100% !important;
+  height: 100% !important;
+  background-color: #aad3df !important;
   z-index: 1 !important;
 }
 .leaflet-pane {

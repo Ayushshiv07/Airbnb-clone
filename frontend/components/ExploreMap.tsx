@@ -72,9 +72,28 @@ export function ExploreMap({ listings }: ExploreMapProps) {
   const { MapContainer, TileLayer, Marker, Popup, useMap } = require('react-leaflet');
   const L = require('leaflet');
 
-  // Map Bounds Controller to fit view to markers
+  // Map Bounds Controller to fit view to markers and force size invalidation
   function MapBoundsController({ listingsData }: { listingsData: ListingCardType[] }) {
     const map = useMap();
+
+    useEffect(() => {
+      // Force Leaflet to recalculate container dimensions immediately and after render layout settles
+      const handleResize = () => {
+        map.invalidateSize();
+      };
+      
+      map.invalidateSize();
+      const timer = setTimeout(() => {
+        map.invalidateSize();
+      }, 150);
+
+      window.addEventListener('resize', handleResize);
+      return () => {
+        clearTimeout(timer);
+        window.removeEventListener('resize', handleResize);
+      };
+    }, [map]);
+
     useEffect(() => {
       if (!listingsData || listingsData.length === 0) return;
       const bounds: [number, number][] = [];
@@ -100,10 +119,11 @@ export function ExploreMap({ listings }: ExploreMapProps) {
         if (bounds.length === 1) {
           map.setView(bounds[0], 12);
         } else {
-          map.fitBounds(bounds, { padding: [40, 40], maxZoom: 13 });
+          map.fitBounds(bounds, { padding: [50, 50], maxZoom: 13, minZoom: 3 });
         }
       }
     }, [listingsData, map]);
+
     return null;
   }
 
@@ -115,6 +135,9 @@ export function ExploreMap({ listings }: ExploreMapProps) {
       <MapContainer
         center={defaultCenter}
         zoom={4}
+        minZoom={3}
+        maxBounds={[[-85, -180], [85, 180]]}
+        maxBoundsViscosity={1.0}
         scrollWheelZoom={true}
         className="w-full h-full"
       >

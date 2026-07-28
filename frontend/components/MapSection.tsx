@@ -99,8 +99,18 @@ export function MapSection({ latitude, longitude, city, country }: MapSectionPro
   }
 
   // Dynamic Leaflet render
-  const { MapContainer, TileLayer, Marker, Popup } = require('react-leaflet');
+  const { MapContainer, TileLayer, Marker, Popup, useMap } = require('react-leaflet');
   const L = require('leaflet');
+
+  function MapResizer() {
+    const map = useMap();
+    useEffect(() => {
+      map.invalidateSize();
+      const timer = setTimeout(() => map.invalidateSize(), 150);
+      return () => clearTimeout(timer);
+    }, [map]);
+    return null;
+  }
 
   // Custom location pin icon
   const customIcon = L.divIcon({
@@ -123,9 +133,13 @@ export function MapSection({ latitude, longitude, city, country }: MapSectionPro
           key={`${lat}-${lng}`}
           center={[lat, lng]}
           zoom={13}
+          minZoom={3}
+          maxBounds={[[-85, -180], [85, 180]]}
+          maxBoundsViscosity={1.0}
           scrollWheelZoom={false}
           className="w-full h-full"
         >
+          <MapResizer />
           <TileLayer
             attribution='&copy; <a href="https://www.google.com/maps">Google Maps</a>'
             url="https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
