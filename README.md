@@ -7,7 +7,7 @@ A high-fidelity, production-grade vacation rental platform built for the **SDE F
 ## Live Deployment & Repository Links
 
 - **Live Deployed Application** : (https://stayscape-clone1.onrender.com/)
-- **Backend API & Swagger Docs** : **`http://localhost:8000/docs`**
+- **Backend API & Swagger Docs** : http://localhost:8000/docs
 
 ---
 
@@ -15,28 +15,28 @@ A high-fidelity, production-grade vacation rental platform built for the **SDE F
 
 | Requirement / Section | Feature | Implementation Status | Location |
 |---|---|---|---|
-| **Core: Home & Search** | Grid of listing cards with photo, title, location, price, rating | ✅ 100% Complete | `frontend/components/ListingGrid.tsx` |
-| | Search bar (location + date range + guests) | ✅ 100% Complete | `frontend/components/SearchBar.tsx` |
-| | Category / filter row (price range, property type, amenities) | ✅ 100% Complete | `frontend/components/FilterRow.tsx` |
-| | Pagination & location pill quick links | ✅ 100% Complete | `frontend/components/ListingGrid.tsx` |
-| **Core: Listing Detail** | 5-Photo mosaic gallery + full-screen lightbox modal | ✅ 100% Complete | `frontend/components/Gallery.tsx` |
-| | Title, description, location, amenities, host info | ✅ 100% Complete | `frontend/app/listing/[id]/page.tsx` |
-| | Interactive availability calendar / date-range picker | ✅ 100% Complete | `frontend/components/DateRangeCalendar.tsx` |
-| | Sticky price breakdown widget (rate × nights + fees) | ✅ 100% Complete | `frontend/components/BookingWidget.tsx` |
-| | Ratings aggregation & guest reviews section | ✅ 100% Complete | `frontend/components/ReviewsSection.tsx` |
-| **Core: Booking Flow** | Date range & guest count selection with overlap validation | ✅ 100% Complete | `backend/app/routers/bookings.py` |
-| | Booking summary & mocked checkout modal | ✅ 100% Complete | `frontend/components/CheckoutModal.tsx` |
-| | "My Trips" view (Upcoming, Completed, Cancelled stays) | ✅ 100% Complete | `frontend/app/trips/page.tsx` |
-| | Booking persistence (blocks booked dates on listing calendar) | ✅ 100% Complete | `backend/app/models.py` |
-| **Core: Host Experience**| Host Dashboard (earnings, listings, guest reservations) | ✅ 100% Complete | `frontend/app/host/dashboard/page.tsx` |
-| | Create Listing form with amenities & image URLs | ✅ 100% Complete | `frontend/app/host/listings/new/page.tsx` |
-| | Edit Listing & Delete Listing with active booking conflict guard | ✅ 100% Complete | `backend/app/routers/listings.py` |
-| **Airbnb Experience** | Toast notifications, Wishlist toggles, Empty states, Skeletons | ✅ 100% Complete | `frontend/contexts/ToastContext.tsx` |
-| **Bonus Features** | Interactive Leaflet map with listing location pin | ✅ 100% Complete | `frontend/components/MapSection.tsx` |
-| | Leave a review after completed stay | ✅ 100% Complete | `frontend/components/ReviewsSection.tsx` |
-| | Superhost badges & rating aggregation | ✅ 100% Complete | `backend/app/routers/listings.py` |
-| | Footer with Privacy Policy, Terms of Service, and Sitemap modals | ✅ 100% Complete | `frontend/components/Footer.tsx` |
-| | Responsive mobile/tablet/desktop design & Same-Origin API proxy | ✅ 100% Complete | `frontend/next.config.ts` |
+| **Core: Home & Search** | Grid of listing cards with photo, title, location, price, rating | 100% Complete | `frontend/components/ListingGrid.tsx` |
+| | Search bar (location + date range + guests) | 100% Complete | `frontend/components/SearchBar.tsx` |
+| | Category / filter row (price range, property type, amenities) | 100% Complete | `frontend/components/FilterRow.tsx` |
+| | Pagination & location pill quick links | 100% Complete | `frontend/components/ListingGrid.tsx` |
+| **Core: Listing Detail** | 5-Photo mosaic gallery + full-screen lightbox modal | 100% Complete | `frontend/components/Gallery.tsx` |
+| | Title, description, location, amenities, host info | 100% Complete | `frontend/app/listing/[id]/page.tsx` |
+| | Interactive availability calendar / date-range picker | 100% Complete | `frontend/components/DateRangeCalendar.tsx` |
+| | Sticky price breakdown widget (rate × nights + fees) | 100% Complete | `frontend/components/BookingWidget.tsx` |
+| | Ratings aggregation & guest reviews section | 100% Complete | `frontend/components/ReviewsSection.tsx` |
+| **Core: Booking Flow** | Date range & guest count selection with overlap validation | 100% Complete | `backend/app/routers/bookings.py` |
+| | Booking summary & mocked checkout modal | 100% Complete | `frontend/components/CheckoutModal.tsx` |
+| | "My Trips" view (Upcoming, Completed, Cancelled stays) | 100% Complete | `frontend/app/trips/page.tsx` |
+| | Booking persistence (blocks booked dates on listing calendar) | 100% Complete | `backend/app/models.py` |
+| **Core: Host Experience**| Host Dashboard (earnings, listings, guest reservations) | 100% Complete | `frontend/app/host/dashboard/page.tsx` |
+| | Create Listing form with amenities & image URLs | 100% Complete | `frontend/app/host/listings/new/page.tsx` |
+| | Edit Listing & Delete Listing with active booking conflict guard | 100% Complete | `backend/app/routers/listings.py` |
+| **Airbnb Experience** | Toast notifications, Wishlist toggles, Empty states, Skeletons | 100% Complete | `frontend/contexts/ToastContext.tsx` |
+| **Bonus Features** | Interactive Leaflet map with listing location pin | 100% Complete | `frontend/components/MapSection.tsx` |
+| | Leave a review after completed stay | 100% Complete | `frontend/components/ReviewsSection.tsx` |
+| | Superhost badges & rating aggregation | 100% Complete | `backend/app/routers/listings.py` |
+| | Footer with Privacy Policy, Terms of Service, and Sitemap modals | 100% Complete | `frontend/components/Footer.tsx` |
+| | Responsive mobile/tablet/desktop design & Same-Origin API proxy | 100% Complete | `frontend/next.config.ts` |
 
 ---
 
@@ -160,7 +160,7 @@ erDiagram
 
 ---
 
-## ⚡ Quick Start Instructions
+##  Quick Start Instructions
 
 ### 1. Start Backend Server (FastAPI)
 ```bash
